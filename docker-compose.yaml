@@ -1,0 +1,12 @@
+# docker compose -p dev -f docker-compose.yaml -f docker-compose.prod.yaml up;
+
+services:
+  relay:
+    container_name: relay
+    restart: always
+    build:
+      dockerfile: ./Dockerfile
+    environment:
+      - ADMIN_TOKEN
+    ports:
+      - "9105:3000"
