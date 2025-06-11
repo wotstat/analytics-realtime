@@ -10,4 +10,4 @@ services:
       - CLICKHOUSE_USER
       - CLICKHOUSE_PASSWORD
     ports:
-      - "9105:3000"
+      - "9107:3000"
