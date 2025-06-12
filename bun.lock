@@ -3,6 +3,11 @@
   "workspaces": {
     "": {
       "name": "analytics-realtime",
+      "dependencies": {
+        "@clickhouse/client": "^1.11.2",
+        "hono": "^4.7.11",
+        "node-cron": "^4.1.0",
+      },
       "devDependencies": {
         "@types/bun": "latest",
       },
@@ -12,11 +17,19 @@
     },
   },
   "packages": {
+    "@clickhouse/client": ["@clickhouse/client@1.11.2", "", { "dependencies": { "@clickhouse/client-common": "1.11.2" } }, "sha512-ZE7Q1qxsDNXCkGPf1zqmhpZpwAKxKT+1s4Z432J1Mb2Gm26Y4tG/sJoug81AfAJTt6s7taO2vzNBAKfSR3SStg=="],
+
+    "@clickhouse/client-common": ["@clickhouse/client-common@1.11.2", "", {}, "sha512-H4ECHqaipzMgiZKqpb1Z4N3Ofq+lVTCn8I59XsSynqrsfR4jWZD3PipXVvIzMpDmTMvrlJWrOwAdm0DMNiMQbA=="],
+
     "@types/bun": ["@types/bun@1.2.15", "", { "dependencies": { "bun-types": "1.2.15" } }, "sha512-U1ljPdBEphF0nw1MIk0hI7kPg7dFdPyM7EenHsp6W5loNHl7zqy6JQf/RKCgnUn2KDzUpkBwHPnEJEjII594bA=="],
 
     "@types/node": ["@types/node@24.0.0", "", { "dependencies": { "undici-types": "~7.8.0" } }, "sha512-yZQa2zm87aRVcqDyH5+4Hv9KYgSdgwX1rFnGvpbzMaC7YAljmhBET93TPiTd3ObwTL+gSpIzPKg5BqVxdCvxKg=="],
 
     "bun-types": ["bun-types@1.2.15", "", { "dependencies": { "@types/node": "*" } }, "sha512-NarRIaS+iOaQU1JPfyKhZm4AsUOrwUOqRNHY0XxI8GI8jYxiLXLcdjYMG9UKS+fwWasc1uw1htV9AX24dD+p4w=="],
+
+    "hono": ["hono@4.7.11", "", {}, "sha512-rv0JMwC0KALbbmwJDEnxvQCeJh+xbS3KEWW5PC9cMJ08Ur9xgatI0HmtgYZfOdOSOeYsp5LO2cOhdI8cLEbDEQ=="],
+
+    "node-cron": ["node-cron@4.1.0", "", {}, "sha512-OS+3ORu+h03/haS6Di8Qr7CrVs4YaKZZOynZwQpyPZDnR3tqRbwJmuP2gVR16JfhLgyNlloAV1VTrrWlRogCFA=="],
 
     "typescript": ["typescript@5.8.3", "", { "bin": { "tsc": "bin/tsc", "tsserver": "bin/tsserver" } }, "sha512-p1diW6TqL9L07nNxvRMM7hMMw4c5XOo/1ibL4aAIGmSAt9slTE1Xgw5KWuof2uTOvCg9BY7ZRi+GaF+7sfgPeQ=="],
 
