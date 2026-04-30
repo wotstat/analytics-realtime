@@ -6,7 +6,7 @@ export const clickhouse = createClient({
   username: Bun.env.CLICKHOUSE_USER,
   password: Bun.env.CLICKHOUSE_PASSWORD,
   database: 'WOT',
-  clickhouse_settings: { max_temporary_columns: '1000' }
+  clickhouse_settings: { max_temporary_columns: '1000', output_format_json_quote_64bit_integers: 0 }
 });
 
 
