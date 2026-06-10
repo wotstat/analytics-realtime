@@ -5,7 +5,7 @@ export class SchedulerManager {
 
   private tasks = new Map<string, SchedulerEmitter<any>>();
 
-  constructor(private readonly server: Bun.Server) {
+  constructor(private readonly server: Bun.Server<unknown>) {
   }
 
   addTask(channel: string, task: () => any, cron: string, sendCurrentStateOnConnection: boolean = false) {

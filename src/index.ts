@@ -16,7 +16,7 @@ app.get('/:channel', (c) => {
 })
 
 
-const server = Bun.serve<{ channel: string }, {}>({
+const server = Bun.serve<{ channel: string }>({
   fetch: app.fetch,
   port: 3000,
   websocket: {
@@ -41,8 +41,10 @@ const server = Bun.serve<{ channel: string }, {}>({
 
 import TimeTask from './tasks/time'
 import { totalEvents } from './tasks/totalEvents'
+import { comp7LastRecalculation } from './tasks/comp7LastRecalculation'
 const manager = new SchedulerManager(server)
   .addTask('time', TimeTask, '* * * * * *', true)
-  .addTask('totalEvents', totalEvents, '* * * * * *', true);
+  .addTask('totalEvents', totalEvents, '* * * * * *', true)
+  .addTask('comp7LastRecalculation', comp7LastRecalculation, '* * * * * *', true)
 
 console.log(`WebSocket server running on ws://localhost:${server.port}`);
