@@ -9,21 +9,20 @@ app.get('/:channel', (c) => {
   const channel = c.req.param('channel')
   if (!channel) return c.json({ message: 'No channel provided' }, 400)
 
-  const success = server.upgrade(c.req.raw, { data: { channel } });
+  const success = server.upgrade(c.req.raw, { data: { channel, queries: c.req.queries() } });
   if (success) return new Response(null);
 
   return c.json({ message: 'Redirecting...' })
 })
 
 
-const server = Bun.serve<{ channel: string }>({
+const server = Bun.serve<{ channel: string; queries: Record<string, string[]> }>({
   fetch: app.fetch,
   port: 3000,
   websocket: {
     open(ws) {
-      const { channel } = ws.data;
-      manager.onConnect(channel, ws);
-      ws.subscribe(channel);
+      const { channel, queries } = ws.data;
+      manager.onConnect(channel, queries, ws);
     },
     message(ws, message) {
       if (message === "ping") {
@@ -32,8 +31,8 @@ const server = Bun.serve<{ channel: string }>({
       }
     },
     close(ws) {
-      const { channel } = ws.data;
-      ws.unsubscribe(channel);
+      const { channel, queries } = ws.data;
+      manager.onDisconnect(channel, queries, ws);
     },
   }
 });
@@ -42,9 +41,14 @@ const server = Bun.serve<{ channel: string }>({
 import TimeTask from './tasks/time'
 import { totalEvents } from './tasks/totalEvents'
 import { comp7LastRecalculation } from './tasks/comp7LastRecalculation'
+import { BattleResultTask } from './tasks/BattleResultTask'
+
+const EVERY_SECOND = '* * * * * *'
+
 const manager = new SchedulerManager(server)
-  .addTask('time', TimeTask, '* * * * * *', true)
-  .addTask('totalEvents', totalEvents, '* * * * * *', true)
-  .addTask('comp7LastRecalculation', comp7LastRecalculation, '* * * * * *', true)
+  .addSimpleTask('time', TimeTask, EVERY_SECOND, true)
+  .addSimpleTask('totalEvents', totalEvents, EVERY_SECOND, true)
+  .addSimpleTask('comp7LastRecalculation', comp7LastRecalculation, EVERY_SECOND, true)
+  .addTask('battleResult', new BattleResultTask('battleResult', EVERY_SECOND))
 
 console.log(`WebSocket server running on ws://localhost:${server.port}`);
