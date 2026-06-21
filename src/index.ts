@@ -42,6 +42,7 @@ import TimeTask from './tasks/time'
 import { totalEvents } from './tasks/totalEvents'
 import { comp7LastRecalculation } from './tasks/comp7LastRecalculation'
 import { BattleResultTask } from './tasks/BattleResultTask'
+import { Comp7InfoTask } from './tasks/Comp7InfoTask'
 
 const EVERY_SECOND = '* * * * * *'
 
@@ -50,5 +51,6 @@ const manager = new SchedulerManager(server)
   .addSimpleTask('totalEvents', totalEvents, EVERY_SECOND, true)
   .addSimpleTask('comp7LastRecalculation', comp7LastRecalculation, EVERY_SECOND, true)
   .addTask('battleResult', new BattleResultTask('battleResult', EVERY_SECOND))
+  .addTask('comp7Info', new Comp7InfoTask('comp7Info', '* * * * * *'))
 
 console.log(`WebSocket server running on ws://localhost:${server.port}`);
